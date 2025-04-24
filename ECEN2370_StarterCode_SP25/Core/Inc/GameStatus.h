@@ -37,7 +37,7 @@ void drawFloatingCoin(uint16_t col, uint8_t player);
 Board getCurrentBoard(void);
 void initBoard(void);
 void emptyBoard(void);
-void addCoin(uint8_t col, uint8_t player);
+bool addCoin(uint8_t col, uint8_t player);
 void setButtonPressed(bool pressed);
 void player2Turn(void);
 uint8_t gamePlay(void); // function for overall gameplay - returns the winner

@@ -28,7 +28,7 @@ void boardDisplay(void) {
 }
 
 void drawCoins(void) {
-	initBoard();
+//	initBoard();
 	Board board = getCurrentBoard();
 
 //	uint8_t **board = getCurrentBoard();
@@ -53,19 +53,21 @@ void drawCoins(void) {
 uint8_t leftOrRight(void) {
 	while(1) {
 		if (returnTouchStateAndLocation(&StaticTouchData) == STMPE811_State_Pressed) {
-			if (0 < StaticTouchData.x && StaticTouchData.x < SCREEN_MIDDLE) {
+			if (StaticTouchData.x < SCREEN_MIDDLE) {
 //				LCD_Clear(0,LCD_COLOR_BLUE);
-				return LEFT_SIDE;
+				return RIGHT_SIDE;
 			}
 			else {
 //				LCD_Clear(0,LCD_COLOR_RED);
-				return RIGHT_SIDE;
+				return LEFT_SIDE;
 			}
 		}
 	}
 }
 
 void drawFloatingCoin(uint16_t col, uint8_t player) {
+	boardDisplay();
+
 	uint16_t x = BOARD_LEFT + (COLUMN_WIDTH/2) + (col*COLUMN_WIDTH);
 	uint16_t y = BOARD_TOP - 50;
 
@@ -111,53 +113,61 @@ Board getCurrentBoard(void) {
 	return board;
 }
 
-void addCoin(uint8_t col, uint8_t player) {
+bool addCoin(uint8_t col, uint8_t player) {
 	uint8_t availRow = nextAvailSpots[col];
-	if (availRow < 0) {
-		return;
+	if (availRow == 255) {
+		return false;
 	}
 
 	board.data[availRow][col] = player;
 
 	nextAvailSpots[col] -= 1;
+	return true;
 }
 
-void setButtonPressed(bool pressed) {
-	buttonPressed = pressed;
+void changeFloatingCoin(uint8_t direction) {
+	if (direction == LEFT_SIDE ) {
+		if (floatingCoinCol > 0) {
+			floatingCoinCol -= 1;
+			HAL_Delay(150);
+		}
+	}
+	else {
+		if (floatingCoinCol < NUM_COLS-1) {
+			floatingCoinCol += 1;
+			HAL_Delay(150);
+		}
+	}
+}
+
+void takeTurn() {
+	bool validPosition = addCoin(floatingCoinCol, currentPlayer);
+	if (validPosition == true) {
+		if (currentPlayer == PLAYER_1) {
+			currentPlayer = PLAYER_2;
+		}
+		else {
+			currentPlayer = PLAYER_1;
+		}
+		totalCoinNumber += 1;
+		boardDisplay();
+		drawFloatingCoin(floatingCoinCol, currentPlayer);
+	}
+	// add condition for if you're at 42 coins after adding this coin
 }
 
 // maybe move to application code
 uint8_t gamePlay(void) {
 	initBoard();
 	currentPlayer = PLAYER_1;
+	boardDisplay();
 	while ((totalCoinNumber != TOTAL_SPOTS) && (winner == EMPTY_SPACE)) {
 		boardDisplay();
-		if (currentPlayer == PLAYER_1) {
-			while(buttonPressed == false) {
-				drawFloatingCoin(floatingCoinCol, PLAYER_1);
-				uint8_t direction = leftOrRight();
-				if (direction == LEFT_SIDE ) {
-					if (floatingCoinCol > 0) {
-						floatingCoinCol -= 1;
-					}
-				}
-				else {
-					if (floatingCoinCol < NUM_COLS-1) {
-						floatingCoinCol += 1;
-					}
-				}
-			}
-
-			addCoin(floatingCoinCol, PLAYER_1);
-
-			buttonPressed = false;
-//			currentPlayer = PLAYER_2;
-		}
-		else {
-
-			currentPlayer = PLAYER_1;
-		}
+		drawFloatingCoin(floatingCoinCol, currentPlayer);
+		uint8_t direction = leftOrRight();
+		changeFloatingCoin(direction);
 	}
+	LCD_Clear(0, LCD_COLOR_MAGENTA);
 }
 
 //void hasValidNeighbor(uint8_t x, uint8_t y) {

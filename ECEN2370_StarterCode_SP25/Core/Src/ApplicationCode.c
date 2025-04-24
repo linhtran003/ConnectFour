@@ -22,7 +22,7 @@ void ApplicationInit(void)
     LTCD__Init();
     LTCD_Layer_Init(0);
     LCD_Clear(0,LCD_COLOR_WHITE);
-//    Interrupt_Init(); // for button
+    Interrupt_Init(); // for button
 
     #if COMPILE_TOUCH_FUNCTIONS == 1
 	InitializeLCDTouch();
@@ -48,7 +48,7 @@ void EXTI0_IRQHandler(void) {
 	HAL_NVIC_DisableIRQ(EXTI0_IRQn);
 
 	// CALL THE PLACE FUNCTIONS HERE
-	setButtonPressed(true);
+	takeTurn();
 
 
 //	getDeviceIdGyro();
