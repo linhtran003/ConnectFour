@@ -51,7 +51,7 @@ void drawCoins(void) {
 
 // maybe move to application code??
 uint8_t leftOrRight(void) {
-	while(1) {
+	while(winner == EMPTY_SPACE && totalCoinNumber != TOTAL_SPOTS) {
 		if (returnTouchStateAndLocation(&StaticTouchData) == STMPE811_State_Pressed) {
 			if (StaticTouchData.x < SCREEN_MIDDLE) {
 //				LCD_Clear(0,LCD_COLOR_BLUE);
@@ -143,6 +143,15 @@ void changeFloatingCoin(uint8_t direction) {
 void takeTurn() {
 	bool validPosition = addCoin(floatingCoinCol, currentPlayer);
 	if (validPosition == true) {
+		uint8_t posX = nextAvailSpots[floatingCoinCol] + 1;
+		uint8_t posY = floatingCoinCol;
+
+		winner = evaluateForWinner(posX, posY);
+
+		if (winner != EMPTY_SPACE) {
+			return;
+		}
+
 		if (currentPlayer == PLAYER_1) {
 			currentPlayer = PLAYER_2;
 		}
@@ -156,23 +165,48 @@ void takeTurn() {
 	// add condition for if you're at 42 coins after adding this coin
 }
 
-// maybe move to application code
+// returns 0 if no winner, 1 for p1, 2 for p2
+uint8_t evaluateForWinner(uint8_t x, uint8_t y) {
+
+	int directions[4][2][2] = {{{0, 1}, {0, -1}}, {{1, 0}, {-1, 0}}, {{-1, -1}, {1, 1}}, {{-1, 1}, {1, -1}}};
+	for (int i = 0; i < 4; i++) {
+		uint8_t count = 1;
+
+		count += checkDirection(x, y, directions[i][0][0], directions[i][0][1]);
+		count += checkDirection(x, y, directions[i][1][0], directions[i][1][1]);
+
+		if (count >= 4) {
+			return currentPlayer;
+		}
+	}
+	return EMPTY_SPACE;
+}
+
+uint8_t checkDirection(uint8_t x, uint8_t y, uint8_t m, uint8_t n) {
+	uint8_t currCount = 0;
+	uint8_t currX = x + m;
+	uint8_t currY = y + n;
+
+	while (0 <= currX && currX < NUM_ROWS && 0 <= currY && currY < NUM_COLS && board.data[currX][currY] == currentPlayer) {
+		currCount += 1;
+		currX += m;
+		currY += n;
+	}
+	return currCount;
+}
+
+// maybe move to application code - returns the winner of the game
 uint8_t gamePlay(void) {
 	initBoard();
 	currentPlayer = PLAYER_1;
 	boardDisplay();
 	while ((totalCoinNumber != TOTAL_SPOTS) && (winner == EMPTY_SPACE)) {
-		boardDisplay();
 		drawFloatingCoin(floatingCoinCol, currentPlayer);
 		uint8_t direction = leftOrRight();
 		changeFloatingCoin(direction);
 	}
 	LCD_Clear(0, LCD_COLOR_MAGENTA);
 }
-
-//void hasValidNeighbor(uint8_t x, uint8_t y) {
-//
-//}
 //
 //void determineWinner(uint8_t x, uint8_t y) {
 //	uint8_t winner = EMPTY_SPACE;

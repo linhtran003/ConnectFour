@@ -39,7 +39,9 @@ void initBoard(void);
 void emptyBoard(void);
 bool addCoin(uint8_t col, uint8_t player);
 void setButtonPressed(bool pressed);
-void player2Turn(void);
+//void player2Turn(void);
+uint8_t evaluateForWinner(uint8_t x, uint8_t y);
+uint8_t checkDirection(uint8_t x, uint8_t y, uint8_t i, uint8_t j);
 uint8_t gamePlay(void); // function for overall gameplay - returns the winner
 
 #endif /* INC_GAMESTATUS_H_ */

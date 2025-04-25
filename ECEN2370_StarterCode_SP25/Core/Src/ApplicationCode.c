@@ -59,6 +59,12 @@ void EXTI0_IRQHandler(void) {
 	HAL_NVIC_EnableIRQ(EXTI0_IRQn);
 }
 
+void fullGame(void) {
+	// before gameplay, put the first screen up
+	uint8_t winner = gamePlay();
+	// then pass the winner to the stats page
+}
+
 void GS_Gameplay(void) {
 	gamePlay();
 }
