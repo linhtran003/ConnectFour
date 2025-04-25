@@ -18,11 +18,12 @@ static STMPE811_TouchData StaticTouchData;
 static uint8_t floatingCoinCol = 3;
 
 void boardDisplay(void) {
-
 	LCD_Clear(0, LCD_COLOR_WHITE);
-	for (uint8_t x=BOARD_LEFT; x< LCD_PIXEL_WIDTH; x+=30) {
-		LCD_Draw_Vertical_Line(x, BOARD_TOP, BOARD_HEIGHT, LCD_COLOR_BLACK);
-	}
+//	for (uint8_t x=BOARD_LEFT; x< LCD_PIXEL_WIDTH; x+=30) {
+//		LCD_Draw_Vertical_Line(x, BOARD_TOP, BOARD_HEIGHT, LCD_COLOR_BLACK);
+//	}
+
+	LCD_Draw_Rectangle_Fill(BOARD_LEFT, BOARD_TOP, 215, BOARD_HEIGHT, LCD_COLOR_BLUE);
 
 	drawCoins();
 }
@@ -35,15 +36,16 @@ void drawCoins(void) {
 
 	for(uint8_t i = 0; i < NUM_ROWS; i++) {
 		for(uint8_t j = 0; j < NUM_COLS; j++) {
-			if (board.data[i][j] != EMPTY_SPACE) {
-				uint16_t x = BOARD_LEFT + (COLUMN_WIDTH/2) + (j*COLUMN_WIDTH);
-				uint16_t y = BOARD_TOP + COIN_RADIUS + (i*(COIN_DIAMETER + GAP_BETWEEN_COINS));
-				if (board.data[i][j] == PLAYER_1) {
-					LCD_Draw_Circle_Fill(x, y, COIN_RADIUS, LCD_COLOR_RED);
-				}
-				else if (board.data[i][j] == PLAYER_2) {
-					LCD_Draw_Circle_Fill(x, y, COIN_RADIUS, LCD_COLOR_YELLOW);
-				}
+			uint16_t x = BOARD_LEFT + (COLUMN_WIDTH/2) + (j*COLUMN_WIDTH);
+			uint16_t y = BOARD_TOP + COIN_RADIUS + (i*(COIN_DIAMETER + GAP_BETWEEN_COINS));
+			if (board.data[i][j] == PLAYER_1) {
+				LCD_Draw_Circle_Fill(x, y, COIN_RADIUS, LCD_COLOR_RED);
+			}
+			else if (board.data[i][j] == PLAYER_2) {
+				LCD_Draw_Circle_Fill(x, y, COIN_RADIUS, LCD_COLOR_YELLOW);
+			}
+			else {
+				LCD_Draw_Circle_Fill(x, y, COIN_RADIUS, LCD_COLOR_WHITE);
 			}
 		}
 	}
