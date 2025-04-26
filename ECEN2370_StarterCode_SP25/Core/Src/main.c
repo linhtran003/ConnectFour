@@ -109,7 +109,8 @@ int main(void)
   ApplicationInit(); // Initializes the LCD functionality
 //  LCD_Visual_Demo();
 //  LCD_Board_Display();
-  GS_Gameplay();
+//  GS_Gameplay();
+  fullGame();
   HAL_Delay(5000);
 //  printf("HELLO WORLD");
   /* USER CODE END 2 */

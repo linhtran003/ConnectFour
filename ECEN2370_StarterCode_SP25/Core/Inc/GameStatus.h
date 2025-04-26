@@ -19,6 +19,9 @@
 #define PLAYER_2 2
 #define TOTAL_SPOTS 42
 
+#define ONE_PLAYER_MODE 1
+#define TWO_PLAYER_MODE 2
+
 typedef struct {
     uint8_t data[NUM_ROWS][NUM_COLS];
 } Board;
@@ -40,8 +43,9 @@ void emptyBoard(void);
 bool addCoin(uint8_t col, uint8_t player);
 void setButtonPressed(bool pressed);
 //void player2Turn(void);
+uint8_t AITurn(void);
 uint8_t evaluateForWinner(uint8_t x, uint8_t y);
-uint8_t checkDirection(uint8_t x, uint8_t y, uint8_t i, uint8_t j);
-uint8_t gamePlay(void); // function for overall gameplay - returns the winner
+uint8_t checkDirection(uint8_t x, uint8_t y, uint8_t m, uint8_t n, uint8_t player);
+uint8_t gamePlay(uint8_t gameMode); // function for overall gameplay - returns the winner
 
 #endif /* INC_GAMESTATUS_H_ */

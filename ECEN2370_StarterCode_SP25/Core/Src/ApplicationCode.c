@@ -61,13 +61,15 @@ void EXTI0_IRQHandler(void) {
 
 void fullGame(void) {
 	// before gameplay, put the first screen up
-	uint8_t winner = gamePlay();
+	uint8_t gameMode = displayOpeningScreen();
+	HAL_Delay(2000);
+	uint8_t winner = gamePlay(gameMode);
 	// then pass the winner to the stats page
 }
 
-void GS_Gameplay(void) {
-	gamePlay();
-}
+//void GS_Gameplay(void) {
+//	gamePlay();
+//}
 
 #if COMPILE_TOUCH_FUNCTIONS == 1
 void LCD_Touch_Polling_Demo(void)

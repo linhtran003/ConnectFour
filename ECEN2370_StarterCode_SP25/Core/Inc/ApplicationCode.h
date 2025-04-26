@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include "Button_Driver.h"
 #include "GameStatus.h"
+#include "OpeningScreen.h"
 
 #ifndef INC_APPLICATIONCODE_H_
 #define INC_APPLICATIONCODE_H_
