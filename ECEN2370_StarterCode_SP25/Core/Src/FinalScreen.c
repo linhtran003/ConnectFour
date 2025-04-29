@@ -8,6 +8,8 @@
 
 #include "FinalScreen.h"
 
+static STMPE811_TouchData StaticTouchData;
+
 uint8_t displayGameStats(uint8_t p1Wins, uint8_t p2Wins, uint32_t gameTime) {
 	LCD_Clear(0, LCD_COLOR_WHITE);
 
@@ -111,8 +113,6 @@ void drawGameModeButton(void) {
 	for (uint8_t i = 0; i < HOME_TEXT_LENGTH; i++) {
 		LCD_DisplayChar(HOME_TEXT_X + (i*15), HOME_TEXT_Y, text[i]);
 	}
-
-	HAL_Delay(7000);
 }
 
 uint8_t selectButton(void) {
@@ -120,12 +120,12 @@ uint8_t selectButton(void) {
 		if (returnTouchStateAndLocation(&StaticTouchData) == STMPE811_State_Pressed) {
 			if (BUTTON_X < StaticTouchData.x && StaticTouchData.x < (BUTTON_X + BUTTON_WIDTH)
 					&& BUTTON3_Y < StaticTouchData.y && StaticTouchData.y < (BUTTON3_Y + BUTTON_HEIGHT)) {
-				LCD_Clear(0,LCD_COLOR_BLUE);
+//				LCD_Clear(0,LCD_COLOR_BLUE);
 				return REPLAY_SELECTED;
 			}
 			else if (BUTTON_X < StaticTouchData.x && StaticTouchData.x < (BUTTON_X + BUTTON_WIDTH)
 					&& BUTTON4_Y < StaticTouchData.y && StaticTouchData.y < (BUTTON4_Y + BUTTON_HEIGHT)) {
-				LCD_Clear(0,LCD_COLOR_MAGENTA);
+//				LCD_Clear(0,LCD_COLOR_MAGENTA);
 				return HOME_SELECTED;
 			}
 		}

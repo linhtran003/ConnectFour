@@ -37,7 +37,7 @@
 uint8_t displayGameStats(uint8_t p1Wins, uint8_t p2Wins, uint32_t gameTime);
 void drawReplayButton(void);
 void drawGameModeButton(void);
-int8_t selectButton(void);
+uint8_t selectButton(void);
 //void displayFinalScreen(void);
 
 #endif /* INC_FINALSCREEN_H_ */

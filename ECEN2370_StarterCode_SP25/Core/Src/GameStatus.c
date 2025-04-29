@@ -291,14 +291,16 @@ uint8_t gamePlay(uint8_t gameMode) {
 	initBoard();
 	currentPlayer = PLAYER_1;
 	boardDisplay();
+	totalCoinNumber = 0;
+	winner = EMPTY_SPACE;
 	if (gameMode == TWO_PLAYER_MODE) {
 		while ((totalCoinNumber != TOTAL_SPOTS) && (winner == EMPTY_SPACE)) {
 			drawFloatingCoin(floatingCoinCol, currentPlayer);
 			uint8_t direction = leftOrRight();
 			changeFloatingCoin(direction);
 		}
-		LCD_Clear(0, LCD_COLOR_MAGENTA);
-		HAL_Delay(5000);
+//		LCD_Clear(0, LCD_COLOR_MAGENTA);
+//		HAL_Delay(5000);
 	}
 	else {
 		while ((totalCoinNumber != TOTAL_SPOTS) && (winner == EMPTY_SPACE)) {
@@ -315,8 +317,8 @@ uint8_t gamePlay(uint8_t gameMode) {
 				currentPlayer = PLAYER_1;
 			}
 		}
-		LCD_Clear(0, LCD_COLOR_MAGENTA);
-		HAL_Delay(5000);
+//		LCD_Clear(0, LCD_COLOR_MAGENTA);
+//		HAL_Delay(5000);
 	}
 
 	return winner;

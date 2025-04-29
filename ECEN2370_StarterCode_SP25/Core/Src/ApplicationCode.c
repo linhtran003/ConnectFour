@@ -16,11 +16,13 @@ extern void initialise_monitor_handles(void);
 static STMPE811_TouchData StaticTouchData;
 #endif // COMPILE_TOUCH_FUNCTIONS
 
-static bool continuePlaying = true;
+static uint8_t continuePlaying = REPLAY_SELECTED;
 static uint8_t player1Wins;
 static uint8_t player2Wins;
 static uint32_t startTime;
 static uint32_t totalTime;
+static uint8_t winner;
+uint8_t gameMode;
 
 void ApplicationInit(void)
 {
@@ -62,21 +64,27 @@ void EXTI0_IRQHandler(void) {
 
 void fullGame(void) {
 	// before gameplay, put the first screen up
-	uint8_t gameMode = displayOpeningScreen();
-	HAL_Delay(2000);
+	while(1) {
+		gameMode = displayOpeningScreen();
+//		HAL_Delay(2000);
+		continuePlaying = REPLAY_SELECTED;
+		player1Wins = 0;
+		player2Wins = 0;
 
-	while (continuePlaying == REPLAY_SELECTED) {
-		startTime = HAL_GetTick();
-		uint8_t winner = gamePlay(gameMode);
-		totalTime = HAL_GetTick() - startTime;
-		if (winner == PLAYER_1) {
-			player1Wins += 1;
-		}
-		else if (winner == PLAYER_2) {
-			player2Wins += 1;
-		}
+		while (continuePlaying == REPLAY_SELECTED) {
+			startTime = HAL_GetTick();
+			winner = gamePlay(gameMode);
+			totalTime = HAL_GetTick() - startTime;
+			if (winner == PLAYER_1) {
+				player1Wins += 1;
+			}
+			else if (winner == PLAYER_2) {
+				player2Wins += 1;
+			}
 
-		continuePlaying = displayGameStats(player1Wins, player2Wins, totalTime/1000);
+			continuePlaying = displayGameStats(player1Wins, player2Wins, totalTime/1000);
+			HAL_Delay(200);
+		}
 	}
 }
 
