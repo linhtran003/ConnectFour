@@ -44,6 +44,7 @@ bool addCoin(uint8_t col, uint8_t player);
 void setButtonPressed(bool pressed);
 //void player2Turn(void);
 uint8_t AITurn(void);
+uint8_t evalMove(uint8_t x, uint8_t y, uint8_t player);
 uint8_t evaluateForWinner(uint8_t x, uint8_t y);
 uint8_t checkDirection(uint8_t x, uint8_t y, uint8_t m, uint8_t n, uint8_t player);
 uint8_t gamePlay(uint8_t gameMode); // function for overall gameplay - returns the winner

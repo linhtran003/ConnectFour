@@ -16,6 +16,12 @@ extern void initialise_monitor_handles(void);
 static STMPE811_TouchData StaticTouchData;
 #endif // COMPILE_TOUCH_FUNCTIONS
 
+static bool continuePlaying = true;
+static uint8_t player1Wins;
+static uint8_t player2Wins;
+static uint32_t startTime;
+static uint32_t totalTime;
+
 void ApplicationInit(void)
 {
 	initialise_monitor_handles(); // Allows printf functionality
@@ -47,12 +53,7 @@ void LCD_Board_Display(void) {
 void EXTI0_IRQHandler(void) {
 	HAL_NVIC_DisableIRQ(EXTI0_IRQn);
 
-	// CALL THE PLACE FUNCTIONS HERE
 	takeTurn();
-
-
-//	getDeviceIdGyro();
-//	gyroTemp();
 
 	__HAL_GPIO_EXTI_CLEAR_FLAG(GPIO_PIN_0);
 
@@ -63,13 +64,22 @@ void fullGame(void) {
 	// before gameplay, put the first screen up
 	uint8_t gameMode = displayOpeningScreen();
 	HAL_Delay(2000);
-	uint8_t winner = gamePlay(gameMode);
-	// then pass the winner to the stats page
+
+	while (continuePlaying == REPLAY_SELECTED) {
+		startTime = HAL_GetTick();
+		uint8_t winner = gamePlay(gameMode);
+		totalTime = HAL_GetTick() - startTime;
+		if (winner == PLAYER_1) {
+			player1Wins += 1;
+		}
+		else if (winner == PLAYER_2) {
+			player2Wins += 1;
+		}
+
+		continuePlaying = displayGameStats(player1Wins, player2Wins, totalTime/1000);
+	}
 }
 
-//void GS_Gameplay(void) {
-//	gamePlay();
-//}
 
 #if COMPILE_TOUCH_FUNCTIONS == 1
 void LCD_Touch_Polling_Demo(void)

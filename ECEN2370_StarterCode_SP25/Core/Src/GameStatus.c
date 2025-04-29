@@ -318,5 +318,7 @@ uint8_t gamePlay(uint8_t gameMode) {
 		LCD_Clear(0, LCD_COLOR_MAGENTA);
 		HAL_Delay(5000);
 	}
+
+	return winner;
 }
 
