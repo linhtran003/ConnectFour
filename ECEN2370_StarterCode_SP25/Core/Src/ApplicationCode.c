@@ -38,7 +38,6 @@ void ApplicationInit(void)
 	// This is the orientation for the board to be direclty up where the buttons are vertically above the screen
 	// Top left would be low x value, high y value. Bottom right would be low x value, low y value.
 	StaticTouchData.orientation = STMPE811_Orientation_Portrait_2;
-//	StaticTouchData.orientation = STMPE811_Orientation_Landscape_1;
 
 	#endif // COMPILE_TOUCH_FUNCTIONS
 }
@@ -63,10 +62,8 @@ void EXTI0_IRQHandler(void) {
 }
 
 void fullGame(void) {
-	// before gameplay, put the first screen up
 	while(1) {
 		gameMode = displayOpeningScreen();
-//		HAL_Delay(2000);
 		continuePlaying = REPLAY_SELECTED;
 		player1Wins = 0;
 		player2Wins = 0;

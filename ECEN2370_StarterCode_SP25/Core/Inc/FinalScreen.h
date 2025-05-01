@@ -9,7 +9,6 @@
 #define INC_FINALSCREEN_H_
 
 #include "OpeningScreen.h"
-#include <stdio.h>
 #include <string.h>
 
 #define HOME_SELECTED 1
@@ -22,7 +21,8 @@
 #define TIME_NUM_Y 110
 
 #define TOTAL_TEXT_LENGTH 25
-#define WIN_TEXT_LENGTH 15
+#define RED_WIN_TEXT_LENGTH 10
+#define YELLOW_WIN_TEXT_LENGTH 13
 #define TIME_TEXT_LENGTH 11
 #define REPLAY_TEXT_LENGTH 11
 #define HOME_TEXT_LENGTH 4

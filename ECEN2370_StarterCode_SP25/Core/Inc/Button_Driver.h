@@ -10,7 +10,6 @@
 
 #include <stdbool.h>
 #include "stm32f4xx_hal.h"
-//#include "InterruptControl.h"
 
 #define BUTTON_PORT_NUMBER GPIOA
 #define BUTTON_PIN_NUMBER 0

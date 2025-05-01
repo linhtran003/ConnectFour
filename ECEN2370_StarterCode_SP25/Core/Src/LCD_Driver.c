@@ -337,10 +337,6 @@ void visualDemo(void)
 	LCD_DisplayChar(140,160,'d');
 }
 
-//void drawCoins(void) {
-//	uint_8 []
-//}
-
 /**
   * @brief  This function is executed in case of error occurrence.
   * @retval None

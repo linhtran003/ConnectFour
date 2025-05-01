@@ -4,9 +4,7 @@
  *  Created on: Apr 22, 2025
  *      Author: linhtran
  */
-#include <stdio.h>
-#include <stdint.h>
-#include <stdbool.h>
+
 #include <LCD_Driver.h>
 
 #ifndef INC_GAMESTATUS_H_
@@ -26,27 +24,25 @@ typedef struct {
     uint8_t data[NUM_ROWS][NUM_COLS];
 } Board;
 
-//typedef struct {
-//    uint8_t data[8];
-//} Neighbors;
-
 void boardDisplay(void);
 void drawCoins(void);
 uint8_t leftOrRight(void);
 void drawFloatingCoin(uint16_t col, uint8_t player);
 
 
-
+// board or display functions
 Board getCurrentBoard(void);
 void initBoard(void);
 void emptyBoard(void);
 bool addCoin(uint8_t col, uint8_t player);
-void setButtonPressed(bool pressed);
-//void player2Turn(void);
+
+// AI or player turn logic
 uint8_t findMaxPointColumn(uint8_t colPointCount[]);
 bool evalPlayer1NextMove(uint8_t y, uint8_t player, Board potentialBoard);
 void takeTurn(void);
 uint8_t AITurn(void);
+
+// evaluation functions
 uint8_t evalMove(uint8_t x, uint8_t y, uint8_t player, Board b);
 uint8_t evaluateForWinner(uint8_t x, uint8_t y);
 uint8_t checkDirection(uint8_t x, uint8_t y, uint8_t m, uint8_t n, uint8_t player, Board b);

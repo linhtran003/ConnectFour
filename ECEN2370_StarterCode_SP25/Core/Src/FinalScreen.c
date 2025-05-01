@@ -13,13 +13,11 @@ static STMPE811_TouchData StaticTouchData;
 void displayGameStats(uint8_t p1Wins, uint8_t p2Wins, int gameTime) {
 	LCD_Clear(0, LCD_COLOR_WHITE);
 
-//	LCD_Draw_Rectangle_Fill(BUTTON_X, BUTTON1_Y, BUTTON_WIDTH, BUTTON_HEIGHT, LCD_COLOR_BLUE2);
 	uint8_t p1TextLength = 0;
 	uint8_t p2TextLength = 0;
 	uint8_t p1TotalTextLength = 0;
 	uint8_t p2TotalTextLength = 0;
 	uint8_t timeLength = 0;
-//	uint8_t totalTimeLength = 0;
 
 	if (p1Wins/10 == 0) {
 		p1TextLength = 1;
@@ -41,11 +39,11 @@ void displayGameStats(uint8_t p1Wins, uint8_t p2Wins, int gameTime) {
 	sprintf(p1WinText, "%d", p1Wins);
 	sprintf(p2WinText, "%d", p2Wins);
 
-	p1TotalTextLength = WIN_TEXT_LENGTH + p1TextLength;
-	p2TotalTextLength = WIN_TEXT_LENGTH + p2TextLength;
+	p1TotalTextLength = RED_WIN_TEXT_LENGTH + p1TextLength;
+	p2TotalTextLength = YELLOW_WIN_TEXT_LENGTH + p2TextLength;
 
-	char text1[WIN_TEXT_LENGTH + 3] = "Player 1 Wins: ";
-	char text2[WIN_TEXT_LENGTH + 3] = "Player 2 Wins: ";
+	char text1[RED_WIN_TEXT_LENGTH + 3] = "Red Wins: ";
+	char text2[YELLOW_WIN_TEXT_LENGTH + 3] = "Yellow Wins: ";
 
 	strcat(text1, p1WinText);
 	strcat(text2, p2WinText);
@@ -75,8 +73,6 @@ void displayGameStats(uint8_t p1Wins, uint8_t p2Wins, int gameTime) {
 	} while (gameTime != 0);
 
 	timeLength += 1;
-
-//	totalTimeLength = TIME_TEXT_LENGTH + timeLength;
 
 	for (uint8_t i = 0; i < TIME_TEXT_LENGTH; i++) {
 		LCD_DisplayChar(PLAYER_TEXT_X + (i*14), TIME_TEXT_Y, timeString[i]);

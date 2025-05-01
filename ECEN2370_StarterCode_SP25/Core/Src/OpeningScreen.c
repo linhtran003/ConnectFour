@@ -48,12 +48,10 @@ uint8_t selectGameMode(void) {
 		if (returnTouchStateAndLocation(&StaticTouchData) == STMPE811_State_Pressed) {
 			if (BUTTON_X < StaticTouchData.x && StaticTouchData.x < (BUTTON_X + BUTTON_WIDTH)
 					&& BUTTON1_Y < StaticTouchData.y && StaticTouchData.y < (BUTTON1_Y + BUTTON_HEIGHT)) {
-//				LCD_Clear(0,LCD_COLOR_BLUE);
 				return ONE_PLAYER_MODE;
 			}
 			else if (BUTTON_X < StaticTouchData.x && StaticTouchData.x < (BUTTON_X + BUTTON_WIDTH)
 					&& BUTTON2_Y < StaticTouchData.y && StaticTouchData.y < (BUTTON2_Y + BUTTON_HEIGHT)) {
-//				LCD_Clear(0,LCD_COLOR_MAGENTA);
 				return TWO_PLAYER_MODE;
 			}
 		}
