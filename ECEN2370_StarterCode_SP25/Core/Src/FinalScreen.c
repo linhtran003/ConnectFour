@@ -10,7 +10,7 @@
 
 static STMPE811_TouchData StaticTouchData;
 
-uint8_t displayGameStats(uint8_t p1Wins, uint8_t p2Wins, uint32_t gameTime) {
+void displayGameStats(uint8_t p1Wins, uint8_t p2Wins, int gameTime) {
 	LCD_Clear(0, LCD_COLOR_WHITE);
 
 //	LCD_Draw_Rectangle_Fill(BUTTON_X, BUTTON1_Y, BUTTON_WIDTH, BUTTON_HEIGHT, LCD_COLOR_BLUE2);
@@ -35,8 +35,8 @@ uint8_t displayGameStats(uint8_t p1Wins, uint8_t p2Wins, uint32_t gameTime) {
 		p2TextLength = 2;
 	}
 
-	char p1WinText[p1TextLength];
-	char p2WinText[p2TextLength];
+	char p1WinText[4];
+	char p2WinText[4];
 
 	sprintf(p1WinText, "%d", p1Wins);
 	sprintf(p2WinText, "%d", p2Wins);
@@ -85,10 +85,6 @@ uint8_t displayGameStats(uint8_t p1Wins, uint8_t p2Wins, uint32_t gameTime) {
 	for (uint8_t i = 0; i < timeLength; i++) {
 		LCD_DisplayChar(PLAYER_TEXT_X + (i*14), TIME_NUM_Y, timeText[i]);
 	}
-
-	drawReplayButton();
-	drawGameModeButton();
-	return selectButton();
 }
 
 void drawReplayButton(void) {
@@ -120,14 +116,19 @@ uint8_t selectButton(void) {
 		if (returnTouchStateAndLocation(&StaticTouchData) == STMPE811_State_Pressed) {
 			if (BUTTON_X < StaticTouchData.x && StaticTouchData.x < (BUTTON_X + BUTTON_WIDTH)
 					&& BUTTON3_Y < StaticTouchData.y && StaticTouchData.y < (BUTTON3_Y + BUTTON_HEIGHT)) {
-//				LCD_Clear(0,LCD_COLOR_BLUE);
 				return REPLAY_SELECTED;
 			}
 			else if (BUTTON_X < StaticTouchData.x && StaticTouchData.x < (BUTTON_X + BUTTON_WIDTH)
 					&& BUTTON4_Y < StaticTouchData.y && StaticTouchData.y < (BUTTON4_Y + BUTTON_HEIGHT)) {
-//				LCD_Clear(0,LCD_COLOR_MAGENTA);
 				return HOME_SELECTED;
 			}
 		}
 	}
+}
+
+uint8_t displayFinalScreen(uint8_t p1Wins, uint8_t p2Wins, uint32_t gameTime) {
+	displayGameStats(p1Wins, p2Wins, gameTime);
+	drawReplayButton();
+	drawGameModeButton();
+	return selectButton();
 }

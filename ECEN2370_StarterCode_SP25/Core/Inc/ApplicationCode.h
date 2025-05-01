@@ -22,6 +22,8 @@ void LCD_Visual_Demo(void);
 void LCD_Board_Display(void);
 void GS_Gameplay(void);
 
+void fullGame(void);
+
 #if (COMPILE_TOUCH_FUNCTIONS == 1)
 void LCD_Touch_Polling_Demo(void);
 #endif // (COMPILE_TOUCH_FUNCTIONS == 1)

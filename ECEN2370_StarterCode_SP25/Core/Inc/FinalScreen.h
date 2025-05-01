@@ -9,6 +9,8 @@
 #define INC_FINALSCREEN_H_
 
 #include "OpeningScreen.h"
+#include <stdio.h>
+#include <string.h>
 
 #define HOME_SELECTED 1
 #define REPLAY_SELECTED 0
@@ -34,10 +36,10 @@
 #define HOME_TEXT_Y (BUTTON4_Y + (BUTTON_HEIGHT/2) - 10)
 #define REPLAY_TEXT_Y (BUTTON3_Y + (BUTTON_HEIGHT/2) - 10)
 
-uint8_t displayGameStats(uint8_t p1Wins, uint8_t p2Wins, uint32_t gameTime);
+void displayGameStats(uint8_t p1Wins, uint8_t p2Wins, int gameTime);
 void drawReplayButton(void);
 void drawGameModeButton(void);
 uint8_t selectButton(void);
-//void displayFinalScreen(void);
+uint8_t displayFinalScreen(uint8_t p1Wins, uint8_t p2Wins, uint32_t gameTime);
 
 #endif /* INC_FINALSCREEN_H_ */

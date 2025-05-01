@@ -82,7 +82,7 @@ void fullGame(void) {
 				player2Wins += 1;
 			}
 
-			continuePlaying = displayGameStats(player1Wins, player2Wins, totalTime/1000);
+			continuePlaying = displayFinalScreen(player1Wins, player2Wins, totalTime/1000);
 			HAL_Delay(200);
 		}
 	}
